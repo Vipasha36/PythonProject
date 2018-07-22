@@ -1,0 +1,107 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov 12 07:48:16 2017
+
+@author: hp
+"""
+
+import requests
+from bs4 import BeautifulSoup
+#url="http://www.hindustantimes.com/rss/topnews/rssfeed.xml"
+#url="https://economictimes.indiatimes.com/rssfeedstopstories.cms"
+"""
+url=e.get()
+resp=requests.get(url)
+soup=BeautifulSoup(resp.content,features="xml")
+items=soup.find_all("item")
+#############################################
+news_items=[]
+for item in items:
+    news_item = {}
+    news_item['title']=item.title.text
+    news_item['description']=item.description.text
+    news_item['link']=item.link.text
+    #news_item['image']=item.content['url']
+    news_items.append(news_item)
+ """
+###########################################################################    
+from Tkinter import *
+import webbrowser
+###########################################################################
+#List=[]
+news_items=[]
+def set_text():
+    text.delete("0.0",END)
+    url=e.get()
+    resp=requests.get(url)
+    soup=BeautifulSoup(resp.content,features="xml")
+    items=soup.find_all("item")
+#############################################
+    
+    for item in items:
+        news_item = {}
+        news_item['title']=item.title.text
+        news_item['description']=item.description.text
+        news_item['link']=item.link.text
+    #news_item['image']=item.content['url']
+        news_items.append(news_item)
+  #List=news_items
+   
+        
+    for each in news_items:
+        text.insert(INSERT,"------TITLE------\n")
+        text.insert(INSERT,each['title'])
+        text.insert(INSERT,"\n------DESCRIPTION------\n")
+        text.insert(INSERT,each['description'])
+        text.insert(INSERT,"\n")  
+    return
+###########################################333333333333333333333#############
+def website(u):
+    u=news_items[0]
+    link=u['link']
+    #u="www.facebook.com"
+    webbrowser.open(link, new=1)
+
+#############################################################################
+win = Tk()
+win.configure(background='orange')
+######################################################
+labelText=StringVar()
+labelText.set("Enter link here")
+labelDir=Label(win,textvariable=labelText, bg="green", fg="black", font=(None, 15), height=1, width=15)
+labelDir.pack()
+labelDir.place(relx=0.44,rely=0.05)
+#######################################################
+labelText2=StringVar()
+labelText2.set("YOUR RSS FEED")
+labelDir2=Label(win,textvariable=labelText2, bg="BLUE", fg="black", font=(None, 35), height=2, width=15)
+labelDir2.pack()
+labelDir2.place(relx=0.35,rely=0.85)
+#######################################################
+b2 = Button(win,text="ENTER FOR RSS RESULTS",command=lambda:set_text())
+b2.pack(side="top")
+b2.place(relx=0.45,rely=0.15)
+#######################################################
+b3 = Button(win,text="LINK TO ORIGINAL WEBSITE",command=lambda:website("dkfj"))
+b3.pack(side="top")
+b3.place(relx=0.88,rely=0.95)
+#######################################################
+
+e = Entry(win,width=100)
+e.pack(side="top")
+e.place(relx=0.26,rely=0.12)
+##########################################################
+
+
+##########################################################
+text = Text(win,bg="pink",fg="BLACK")
+text.insert(INSERT, "Hello.....")
+
+#########################################################
+#text.pack(side="top")
+text.place(relx=0.25, rely =0.25)
+
+##########################################################
+
+#b2.place(bordermode=OUTSIDE)
+win.mainloop()
